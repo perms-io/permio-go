@@ -4,7 +4,7 @@ import (
 	"sort"
 	"time"
 
-	permissionsv1 "github.com/PrivateJAR/permio-go/proto/permissions/v1"
+	permissionsv1 "github.com/perms-io/permio-go/proto/permissions/v1"
 )
 
 // Permission is a named action, e.g. "document.read".

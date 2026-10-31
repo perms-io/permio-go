@@ -6,7 +6,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	pb "github.com/PrivateJAR/permio-go/proto/permissions/v1"
+	pb "github.com/perms-io/permio-go/proto/permissions/v1"
 )
 
 // CheckRequest is a check of several permissions on several resources.
