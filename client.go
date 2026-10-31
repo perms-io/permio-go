@@ -25,8 +25,8 @@ import (
 	"strings"
 	"time"
 
-	organisationv1 "github.com/PrivateJAR/permio-go/proto/organisation/v1"
-	permissionsv1 "github.com/PrivateJAR/permio-go/proto/permissions/v1"
+	organisationv1 "github.com/perms-io/permio-go/proto/organisation/v1"
+	permissionsv1 "github.com/perms-io/permio-go/proto/permissions/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"

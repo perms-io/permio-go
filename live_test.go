@@ -22,7 +22,7 @@ import (
 	"testing"
 	"time"
 
-	permio "github.com/PrivateJAR/permio-go"
+	permio "github.com/perms-io/permio-go"
 )
 
 const (

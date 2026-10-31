@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/PrivateJAR/permio-go/proto/permissions/v1"
+	pb "github.com/perms-io/permio-go/proto/permissions/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"

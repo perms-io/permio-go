@@ -1,8 +1,8 @@
 # permio-go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/PrivateJAR/permio-go.svg)](https://pkg.go.dev/github.com/PrivateJAR/permio-go)
-[![Version](https://img.shields.io/github/v/tag/PrivateJAR/permio-go?sort=semver&label=version)](https://github.com/PrivateJAR/permio-go/tags)
-[![License](https://img.shields.io/github/license/PrivateJAR/permio-go)](LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/perms-io/permio-go.svg)](https://pkg.go.dev/github.com/perms-io/permio-go)
+[![Version](https://img.shields.io/github/v/tag/perms-io/permio-go?sort=semver&label=version)](https://github.com/perms-io/permio-go/tags)
+[![License](https://img.shields.io/github/license/perms-io/permio-go)](LICENSE)
 
 The official Go SDK for [perms.io](https://perms.io), a hosted authorization
 service for RBAC and fine-grained, resource-level permissions in multi-tenant
@@ -18,7 +18,7 @@ in the same module and stay reachable as an escape hatch.
 ## Install
 
 ```bash
-go get github.com/PrivateJAR/permio-go@latest
+go get github.com/perms-io/permio-go@latest
 ```
 
 Requires Go 1.24 or later.
@@ -246,9 +246,9 @@ These carry the same auth, timeouts, retries and typed errors. Set
 
 | Import path | Contents |
 | --- | --- |
-| `github.com/PrivateJAR/permio-go/proto/permissions/v1` | `PermissionsService` client, permission/role/check/group messages |
-| `github.com/PrivateJAR/permio-go/proto/organisation/v1` | `OrganisationService` client, organisation/project/API key messages |
-| `github.com/PrivateJAR/permio-go/proto/pagination/v1` | Pagination request/response messages |
+| `github.com/perms-io/permio-go/proto/permissions/v1` | `PermissionsService` client, permission/role/check/group messages |
+| `github.com/perms-io/permio-go/proto/organisation/v1` | `OrganisationService` client, organisation/project/API key messages |
+| `github.com/perms-io/permio-go/proto/pagination/v1` | Pagination request/response messages |
 
 ## Development
 
@@ -271,7 +271,7 @@ project (`PERMIO_PROJECT`, default: the key's own project). It uses fixed
 `integration` job runs it when the `PERMIO_DEV_API_KEY` secret exists.
 
 The `proto/` directory is generated from
-[PrivateJAR/proto](https://github.com/PrivateJAR/proto) by its release
+[perms-io/proto](https://github.com/perms-io/proto) by its release
 workflow, which opens a `regen/<tag>` pull request here that replaces only
 `proto/`. Do not edit it by hand.
 

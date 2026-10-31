@@ -7,8 +7,8 @@ import (
 	"log"
 	"os"
 
-	permio "github.com/PrivateJAR/permio-go"
-	permissionsv1 "github.com/PrivateJAR/permio-go/proto/permissions/v1"
+	permio "github.com/perms-io/permio-go"
+	permissionsv1 "github.com/perms-io/permio-go/proto/permissions/v1"
 )
 
 func Example() {

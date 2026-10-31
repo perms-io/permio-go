@@ -1,4 +1,4 @@
-module github.com/PrivateJAR/permio-go
+module github.com/perms-io/permio-go
 
 go 1.24
 

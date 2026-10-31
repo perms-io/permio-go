@@ -4,7 +4,7 @@ import (
 	"context"
 	"iter"
 
-	paginationv1 "github.com/PrivateJAR/permio-go/proto/pagination/v1"
+	paginationv1 "github.com/perms-io/permio-go/proto/pagination/v1"
 	"google.golang.org/protobuf/proto"
 )
 

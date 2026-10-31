@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased (v0.3.0)
+
+### Changed
+
+- **Breaking:** the module path is now `github.com/perms-io/permio-go`, after
+  the GitHub organisation was renamed. Update imports:
+
+  ```sh
+  go get github.com/perms-io/permio-go@v0.3.0
+  find . -name '*.go' -exec sed -i 's#github.com/PrivateJAR/permio-go#github.com/perms-io/permio-go#g' {} +
+  go mod tidy
+  ```
+
+  Nothing else changed: the API and the generated stubs are the same as
+  v0.2.0 apart from their import path. Don't link v0.2.0 and v0.3.0 into the
+  same binary; both register the same proto files.
+
 ## Unreleased (v0.2.0)
 
 ### Changed

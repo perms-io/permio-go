@@ -43,4 +43,4 @@ jobs:
     steps:
       - env:
           GH_TOKEN: ${{ secrets.FACTS_DISPATCH_TOKEN }}
-        run: gh api repos/PrivateJAR/website/dispatches -f event_type=sdk-released
+        run: gh api repos/perms-io/website/dispatches -f event_type=sdk-released
