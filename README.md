@@ -258,17 +258,17 @@ go test -race ./...
 ```
 
 Unit tests run against an in-process gRPC server (bufconn). The integration
-test `TestLive` runs only when `PERMIO_API_KEY` is set:
+test `TestLive` runs only when `PERMIO_API_KEY` and `PERMIO_BASE_URL` are set:
 
 ```bash
-PERMIO_API_KEY=perms_... go test -count=1 -run TestLive -v .
+PERMIO_API_KEY=perms_... PERMIO_BASE_URL=localhost:50051 go test -count=1 -run TestLive -v .
 ```
 
-It talks to the dev API by default (`PERMIO_BASE_URL` overrides it) and
-refuses production, because it writes. The key needs full access to its
-project (`PERMIO_PROJECT`, default: the key's own project). It uses fixed
-`sdk-it-go-*` IDs and removes them before and after the run. In CI the
-`integration` job runs it when the `PERMIO_DEV_API_KEY` secret exists.
+It refuses production (`api.perms.io`), because it writes. The key needs full
+access to its project (`PERMIO_PROJECT`, default: the key's own project). It
+uses fixed `sdk-it-go-*` IDs and removes them before and after the run. In CI the
+`integration` job runs it when the `PERMIO_DEV_API_KEY` and
+`PERMIO_DEV_BASE_URL` secrets exist.
 
 The `proto/` directory is generated from
 [perms-io/proto](https://github.com/perms-io/proto) by its release

@@ -52,10 +52,10 @@ jobs:
       # The live suite (TestLive) skips itself: PERMIO_API_KEY is not set here.
       - run: go test -race ./...
 
-  # Runs TestLive against the dev API (permio.DevEndpoint) when the
-  # PERMIO_DEV_API_KEY secret is available, and is skipped otherwise (for
-  # example on pull requests from forks). The test writes fixed sdk-it-go-* IDs,
-  # so runs are serialised.
+  # Runs TestLive against the development API when the PERMIO_DEV_API_KEY and
+  # PERMIO_DEV_BASE_URL secrets are both available, and is skipped otherwise
+  # (for example on pull requests from forks). The test writes fixed
+  # sdk-it-go-* IDs, so runs are serialised.
   integration:
     name: Integration (dev API)
     runs-on: blacksmith-2vcpu-ubuntu-2404
@@ -63,13 +63,13 @@ jobs:
       group: permio-go-integration
       cancel-in-progress: false
     steps:
-      - name: Check for the dev API key
+      - name: Check for the dev API secrets
         id: key
         env:
-          HAS_KEY: ${{ secrets.PERMIO_DEV_API_KEY != '' }}
+          HAS_KEY: ${{ secrets.PERMIO_DEV_API_KEY != '' && secrets.PERMIO_DEV_BASE_URL != '' }}
         run: |
           if [ "$HAS_KEY" != "true" ]; then
-            echo "::notice::PERMIO_DEV_API_KEY is not available; skipping the integration test."
+            echo "::notice::PERMIO_DEV_API_KEY or PERMIO_DEV_BASE_URL is not available; skipping the integration test."
           fi
           echo "enabled=$HAS_KEY" >> "$GITHUB_OUTPUT"
       - uses: useblacksmith/checkout@v1
@@ -84,6 +84,7 @@ jobs:
         if: steps.key.outputs.enabled == 'true'
         env:
           PERMIO_API_KEY: ${{ secrets.PERMIO_DEV_API_KEY }}
+          PERMIO_BASE_URL: ${{ secrets.PERMIO_DEV_BASE_URL }}
         run: |
           go test -count=1 -run '^TestLive$' -v . | tee live.txt
           # Fail if the suite was skipped rather than run.

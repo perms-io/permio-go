@@ -1,13 +1,13 @@
 package permio_test
 
 // Integration test against a real deployment. Skipped unless PERMIO_API_KEY is
-// set. PERMIO_BASE_URL defaults to the development API (permio.DevEndpoint).
+// set, and PERMIO_BASE_URL is required too (there is no default endpoint).
 // Because the test writes, it only runs against an allowlist of hosts (see
-// allowedLiveHost): the dev API and local servers, never production. The key
-// needs full access to its project (PERMIO_PROJECT, default: the key's project
-// from WhoAmI):
+// allowedLiveHost): non-production Permio hosts and local servers, never
+// production. The key needs full access to its project (PERMIO_PROJECT,
+// default: the key's project from WhoAmI):
 //
-//	PERMIO_API_KEY=perms_... go test -run TestLive -v .
+//	PERMIO_API_KEY=perms_... PERMIO_BASE_URL=localhost:50051 go test -run TestLive -v .
 //
 // Everything it creates uses fixed IDs prefixed "sdk-it-go" and is removed
 // before and after the run, so an interrupted run is cleaned up by the next
@@ -38,9 +38,9 @@ const (
 )
 
 // allowedLiveHost reports whether endpoint ("host:port", "host" or a URL) is
-// one the integration test may write to: the dev API, a loopback address,
-// localhost, or a name under .localhost or .test. Anything else, production
-// included, is refused.
+// one the integration test may write to: a host under .perms.io other than
+// production (api.perms.io), a loopback address, localhost, or a name under
+// .localhost or .test. Anything else, production included, is refused.
 func allowedLiveHost(endpoint string) (string, bool) {
 	raw := endpoint
 	if !strings.Contains(raw, "://") {
@@ -52,8 +52,11 @@ func allowedLiveHost(endpoint string) (string, bool) {
 	}
 	host := strings.TrimSuffix(strings.ToLower(u.Hostname()), ".")
 	switch {
-	case host == "dev-api.perms.io", host == "localhost", host == "127.0.0.1", host == "::1",
-		strings.HasSuffix(host, ".localhost"), strings.HasSuffix(host, ".test"):
+	case host == "api.perms.io":
+		return host, false
+	case host == "localhost", host == "127.0.0.1", host == "::1",
+		strings.HasSuffix(host, ".localhost"), strings.HasSuffix(host, ".test"),
+		strings.HasSuffix(host, ".perms.io"):
 		return host, true
 	}
 	return host, false
@@ -66,10 +69,10 @@ func TestLive(t *testing.T) {
 	}
 	endpoint := os.Getenv("PERMIO_BASE_URL")
 	if endpoint == "" {
-		endpoint = permio.DevEndpoint
+		t.Skip("PERMIO_BASE_URL is not set")
 	}
 	if host, ok := allowedLiveHost(endpoint); !ok {
-		t.Fatalf("refusing to run the integration test against %q: only dev-api.perms.io, localhost, loopback addresses, *.localhost and *.test are allowed", host)
+		t.Fatalf("refusing to run the integration test against %q: only non-production *.perms.io hosts, localhost, loopback addresses, *.localhost and *.test are allowed", host)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
@@ -246,14 +249,16 @@ func TestLive(t *testing.T) {
 }
 
 func TestLiveHostAllowlist(t *testing.T) {
-	for _, ok := range []string{permio.DevEndpoint, "https://dev-api.perms.io", "localhost:8080", "http://127.0.0.1:9000",
-		"http://[::1]:9000", "http://api.localhost", "permio.test:443", "https://Dev-API.perms.io."} {
+	for _, ok := range []string{"staging.perms.io:443", "https://staging.perms.io", "localhost:8080", "http://127.0.0.1:9000",
+		"http://[::1]:9000", "http://api.localhost", "permio.test:443", "https://Staging.Perms.IO."} {
 		if _, allowed := allowedLiveHost(ok); !allowed {
 			t.Errorf("%q refused", ok)
 		}
 	}
-	for _, bad := range []string{permio.DefaultEndpoint, "https://api.perms.io", "temp-api.perms.io:443", "https://dev-api.perms.io.evil.com",
-		"evil.com/dev-api.perms.io", "https://user@example.com", "localhost.example.com", "test", "", "://"} {
+	for _, bad := range []string{permio.DefaultEndpoint, "https://api.perms.io", "https://API.perms.io.", "api.perms.io:8443",
+		"perms.io", "https://staging.perms.io.evil.com", "foo.perms.io.evil.com:443", "evil.com/staging.perms.io",
+		"https://staging.perms.io@evil.com", "https://user@example.com", "evilperms.io", "localhost.example.com",
+		"test", "", "://"} {
 		if _, allowed := allowedLiveHost(bad); allowed {
 			t.Errorf("%q allowed", bad)
 		}
