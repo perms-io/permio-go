@@ -48,12 +48,12 @@ func TestParseEndpoint(t *testing.T) {
 		target string
 		tls    bool
 	}{
-		"":                          {DefaultEndpoint, true},
-		"dev-api.perms.io:443":      {"dev-api.perms.io:443", true},
-		"https://dev-api.perms.io":  {"dev-api.perms.io:443", true},
-		"https://dev-api.perms.io/": {"dev-api.perms.io:443", true},
-		"http://localhost:8080":     {"localhost:8080", false},
-		"localhost":                 {"localhost:443", true},
+		"":                         {DefaultEndpoint, true},
+		"api.example.com:443":      {"api.example.com:443", true},
+		"https://api.example.com":  {"api.example.com:443", true},
+		"https://api.example.com/": {"api.example.com:443", true},
+		"http://localhost:8080":    {"localhost:8080", false},
+		"localhost":                {"localhost:443", true},
 	} {
 		target, tls, err := parseEndpoint(in)
 		if err != nil || target != want.target || tls != want.tls {
@@ -77,10 +77,10 @@ func TestPlaintextOnlyToLocalHosts(t *testing.T) {
 		_ = c.Close()
 	}
 	for _, opts := range []Options{
-		{Endpoint: "http://dev-api.perms.io"},
+		{Endpoint: "http://api.example.com"},
 		{Endpoint: "http://10.0.0.5:8080"},
 		{Endpoint: "http://localhost.example.com"},
-		{Endpoint: "dev-api.perms.io:443", Insecure: true},
+		{Endpoint: "api.example.com:443", Insecure: true},
 		{Insecure: true}, // the default (production) endpoint
 	} {
 		opts.APIKey = testKey

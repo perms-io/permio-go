@@ -35,9 +35,6 @@ import (
 const (
 	// DefaultEndpoint is the production API.
 	DefaultEndpoint = "api.perms.io:443"
-	// DevEndpoint is the API for Permio's internal development; use
-	// [DefaultEndpoint].
-	DevEndpoint = "dev-api.perms.io:443"
 	// DefaultTimeout is the default per-attempt timeout.
 	DefaultTimeout = 10 * time.Second
 	// EnvAPIKey is read when Options.APIKey is empty.

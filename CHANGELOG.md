@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased (v0.4.0)
+
+### Removed
+
+- **Breaking:** the `DevEndpoint` constant is gone. Code that used it must set
+  `Options.Endpoint` explicitly. `DefaultEndpoint` (production) is unchanged.
+
 ## Unreleased (v0.3.0)
 
 ### Changed
@@ -56,7 +63,8 @@ First release with the hand-written SDK package.
 - Package `permio` at the module root: the hand-written SDK beside the
   generated stubs.
   - `New(Options)` with local API key validation, `PERMIO_API_KEY` fallback,
-    `DefaultEndpoint` / `DevEndpoint`, default project and `WithProject`,
+    `DefaultEndpoint` and an endpoint constant for the development API,
+    default project and `WithProject`,
     per-attempt timeout (default 10s), retry options and an injectable
     `grpc.ClientConnInterface`.
   - Checks: `Check`, `CheckAll`, `CheckAny`, `CheckDetailed`, `Assert`,
