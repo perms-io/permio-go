@@ -1,13 +1,13 @@
 # Changelog
 
-## Unreleased (v0.4.0)
+## v0.4.0
 
 ### Removed
 
 - **Breaking:** the `DevEndpoint` constant is gone. Code that used it must set
   `Options.Endpoint` explicitly. `DefaultEndpoint` (production) is unchanged.
 
-## Unreleased (v0.3.0)
+## v0.3.0
 
 ### Changed
 
@@ -24,7 +24,7 @@
   v0.2.0 apart from their import path. Don't link v0.2.0 and v0.3.0 into the
   same binary; both register the same proto files.
 
-## Unreleased (v0.2.0)
+## v0.2.0
 
 ### Changed
 
