@@ -4,6 +4,10 @@
 [![Version](https://img.shields.io/github/v/tag/perms-io/permio-go?sort=semver&label=version)](https://github.com/perms-io/permio-go/tags)
 [![License](https://img.shields.io/github/license/perms-io/permio-go)](LICENSE)
 
+**[Permio](https://perms.io) is hosted authorization for your app: RBAC and fine-grained permission checks on hierarchical resources, for multi-tenant SaaS.**
+
+[Website](https://perms.io) · [Go SDK docs](https://docs.perms.io/sdk/go/) · [Quickstart](https://docs.perms.io/quickstart/) · [Dashboard](https://app.perms.io)
+
 The official Go SDK for [perms.io](https://perms.io), a hosted authorization
 service for RBAC and fine-grained, resource-level permissions in multi-tenant
 apps. Use it to check whether a user may perform an action on a resource,
@@ -25,6 +29,9 @@ Requires Go 1.24 or later.
 
 ## Quick start
 
+Create an API key in the [dashboard](https://app.perms.io) (project > **API Keys**) and export it as
+`PERMIO_API_KEY`, then:
+
 ```go
 client, err := permio.New(permio.Options{APIKey: os.Getenv("PERMIO_API_KEY"), Project: "my-app"})
 if err != nil { log.Fatal(err) }
@@ -37,6 +44,8 @@ ok, err := client.Check(ctx, userID, "docs.read", resource)
 
 A denial is `false` with a nil error. An error means the check could not be
 answered (bad key, network, ...); treat it as "not allowed".
+
+**Next:** the [Go SDK guide](https://docs.perms.io/sdk/go/) covers configuration, filtering lists by access, groups and errors in depth, and [how Permio works](https://docs.perms.io/how-it-works/) explains resources, roles and inheritance.
 
 ## Configuration
 
